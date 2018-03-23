@@ -408,7 +408,7 @@ macro(HunterGate)
     endif()
 
     cmake_parse_arguments(
-        HUNTER_GATE "LOCAL" "URL;SHA1;GLOBAL;FILEPATH" "" ${ARGV}
+        HUNTER_GATE "LOCAL" "URL;SHA1;GLOBAL;FILEPATH;PRIVATE_PACKAGES" "" ${ARGV}
     )
 
     string(COMPARE EQUAL "${HUNTER_GATE_SHA1}" "" _empty_sha1)
