@@ -42,6 +42,17 @@
 #     * https://github.com/hunter-packages/gate/
 #     * https://github.com/ruslo/hunter
 
+# FIXME: Hack to get around some bugs in the computation of HUNTER_JOBS_NUMBER. It
+# currently resolves to |logical cores| * |physical cores| which makes no sense. That's
+# 72 jobs on my 6-core XEON with hyperthreading enabled.
+include(ProcessorCount)
+ProcessorCount(THIS_SYSTEM_CPU_COUNT)
+set(HUNTER_JOBS_NUMBER ${THIS_SYSTEM_CPU_COUNT} CACHE STRING "Hunter jobs number")
+
+# FIXME: Hack to have a custom find path for hunter packages. Should be configurable
+# via HunterGate().
+list(INSERT CMAKE_MODULE_PATH 0 "${CMAKE_SOURCE_DIR}/cmake/Hunter/find")
+
 option(HUNTER_ENABLED "Enable Hunter package manager support" ON)
 if(HUNTER_ENABLED)
   if(CMAKE_VERSION VERSION_LESS "3.0")
